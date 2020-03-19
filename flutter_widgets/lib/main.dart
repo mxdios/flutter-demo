@@ -17,9 +17,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppBar extends StatelessWidget {
-  MyAppBar({this.title});
+  MyAppBar({this.titleStr, this.leftIcon, this.rightIcon});
   
-  final Widget title;
+  final String titleStr;
+  final IconData leftIcon;
+  final IconData rightIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +32,40 @@ class MyAppBar extends StatelessWidget {
       child: Row(
         children: <Widget> [
           IconButton(
-            icon: Icon(Icons.menu, color: Colors.white,),
+            icon: Icon(leftIcon, color: Colors.white,),
             onPressed: null,
           ),
           Expanded(
-            child: title,
+            child: Text(
+              titleStr,
+              style: Theme.of(context).primaryTextTheme.title,
+              textAlign: TextAlign.center,
+            ),
           ),
           IconButton(
-            icon: Icon(Icons.track_changes, color: Colors.white,),
+            icon: Icon(rightIcon, color: Colors.white,),
             onPressed: null,
           ),
         ]
+      ),
+    );
+  }
+}
+
+class MyContent extends StatelessWidget {
+  MyContent({this.contentStr});
+  final String contentStr;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Center(
+        child: Text(
+          contentStr,
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 50,
+          ),
+        ),
       ),
     );
   }
@@ -52,18 +77,8 @@ class MyStateless extends StatelessWidget {
     return Material(
       child: Column(
         children: <Widget>[
-          MyAppBar(
-            title: Text(
-              'hello world',
-              style: Theme.of(context).primaryTextTheme.title,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text('Hello, flutter'),
-            ),
-          ),
+          MyAppBar(titleStr: 'Hello World', leftIcon: Icons.menu, rightIcon: Icons.track_changes),
+          MyContent(contentStr: 'Hello Flutter'),
         ],
       ),
     );
